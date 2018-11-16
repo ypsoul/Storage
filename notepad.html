@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title>记事本 v1</title>
+</head>
+<body>
+    <h2>客户端记事本</h2>
+    <textarea name="msg" id="msg" cols="50" rows="8"></textarea><br>
+    <input type="button" value="添加事件" onclick="addMsg()"><br>
+    <input type="button" value="清除事件" onclick="clearMsg()"><br>
+    <hr>
+    <table style="width: 600px;">
+        <tr>
+            <th>事件</th>
+            <th>添加时间</th>
+        </tr>
+        <tbody id="show"></tbody>
+    </table>
+
+    <script type="text/javascript">
+        var loadMsg = function () {
+            var tb = document.getElementById("show");
+            tb.innerHTML="";
+            for (var i = 0; i < localStorage.length; i++) {
+                // 获取key
+                var key = localStorage.key(i);
+                console.log(key);
+                var date =new Date();
+                date.setTime(key);
+                // 获取时间
+                var datestr = date.toLocaleDateString() + "&nbsp;" + date.toLocaleTimeString();
+                // 获取事件value
+                var value = localStorage[key];
+                var row = tb.insertRow(i);
+                row.insertCell(0).innerHTML = value;
+                row.insertCell(1).innerHTML = datestr;
+            }
+        }
+        var addMsg = function () {
+            var msgElement = document.getElementById("msg");
+            var time = new Date().getTime();
+            // 以时间为键
+            localStorage[time]=msgElement.value;
+            msgElement.value = "";
+            // alert("数据已保存");
+            loadMsg()
+        }
+        function clearMsg() {
+            localStorage.clear();
+            // alert("数据已清除");
+            loadMsg();
+        }
+        window.onload = loadMsg();
+    </script>
+</body>
+</html>

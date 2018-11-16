@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title>Storage v1.0</title>
+</head>
+<body>
+    <h2>storage</h2>
+    <input type="text" id="input">
+    <!--采用localStorage还是sessionStorage-->
+    <label for="local">使用localStorage</label><input type="checkbox" id="local">
+    <div id="show">
+
+    </div>
+    <input type="button" value="保存数据" onclick="saveStorage('input')">
+    <input type="button" value="读取数据" onclick="loadStorage('show')">
+
+    <script>
+        var saveStorage = function (id) {
+            var checked = document.querySelector("#local").checked;
+            var storage = checked ? localStorage : sessionStorage;
+            var target = document.getElementById(id);
+            storage["message"] = target.value;
+        };
+        var loadStorage = function (id) {
+            var checked = document.querySelector("#local").checked;
+            var storage = checked ? localStorage : sessionStorage;
+            var target = document.getElementById(id);
+            target.innerHTML = storage["message"]
+        }
+    </script>
+
+
+</body>
+</html>
